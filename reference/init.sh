@@ -31,8 +31,8 @@ echo "127.0.0.1\tpma.my" | sudo tee -a /etc/hosts
 
 # Git config
 echo "Git config"
-git config --global user.email "maksim.i.borisov@gmail.com"
-git config --global user.name "Maksim Borisov"
+git config --global user.email "yavictor37@uandex.ru"
+git config --global user.name "Victor Yaschuck"
 
 echo "Adding dev01.my host to nginx & hosts"
 sudo ln -s /www/phpdev-01/conf/local.nginx /etc/nginx/sites-enabled/phpdev
