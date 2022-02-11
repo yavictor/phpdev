@@ -1,11 +1,11 @@
 <?php
 
-include './UnitInterface.php';
-include './ArmyInterface.php';
-include './ResultInterface.php';
-include './Unit.php';
-include './Army.php';
-include './Result.php';
+include './War/UnitInterface.php';
+include './War/ArmyInterface.php';
+include './War/ResultInterface.php';
+include './War/Unit.php';
+include './War/Army.php';
+include './War/Result.php';
 
 
 $infantry = new \Unit('infantry',100, 10, 10);
