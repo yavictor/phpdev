@@ -1,8 +1,12 @@
 <?php
 
 include './UnitInterface.php';
+include './ArmyInterface.php';
+include './ResultInterface.php';
 include './Unit.php';
 include './Army.php';
+include './Result.php';
+
 
 $infantry = new \Unit('infantry',100, 10, 10);
 $archers = new \Unit('archers', 100, 5, 20);
@@ -20,51 +24,17 @@ $army2 = new \Army('Ульф Фасе', [
     [$cavalry, 25],
 ]);
 
-function getOverallResult($army1, $army2, $weather = 'fine'): array
-{
-    list($damage1, $health1) = $army1->getArmyDamageHealth($weather);
-    list($damage2, $health2) = $army2->getArmyDamageHealth($weather);
-    $duration = 0;
-    $result1 = $health1;
-    $result2 = $health2;
-    while ($result1 >= 0 && $result2 >= 0) {
-        $result1 -= $damage2;
-        $result2 -= $damage1;
-        $duration++;
-    }
-    return [$duration, $result1, $result2];
-};
 
-function getEachRowResults($army1, $army2): array
-{
-    $eachRowSpecs1 = $army1->getEachRowDamageHealth();
-    $eachRowSpecs2 = $army2->getEachRowDamageHealth();
+$result = new \Result($army1, $army2);
+$eachRowResults = $result->getEachRowResults();
 
-    $rowsCount = count($eachRowSpecs1);
-    $result = [];
-    for ($i = 0; $i < $rowsCount; $i++) {
-        list($damage1, $health1) = $eachRowSpecs1[$i];
-        list($damage2, $health2) = $eachRowSpecs2[$i];
-        $duration = 0;
-        $result1 = $health1;
-        $result2 = $health2;
-        while ($result1 >= 0 && $result2 >= 0) {
-            $result1 -= $damage2;
-            $result2 -= $damage1;
-            $duration++;
-        }
-        $result[] = [$duration, $result1, $result2];
-    }
-    return $result;
-};
+list($duration, $result1, $result2) = $result->getOverallResult();
 
-$eachRowResults = getEachRowResults($army1, $army2);
+$iceResult = new \Result($army1, $army2, 'ice');
+list($iceDuration, $iceResult1, $iceResult2) = $iceResult->getOverallResult();
 
-list($duration, $result1, $result2) = getOverallResult($army1, $army2);
-
-list($iceDuration, $iceResult1, $iceResult2) = getOverallResult($army1, $army2, 'ice');
-
-list($rainDuration, $rainResult1, $rainResult2) = getOverallResult($army1, $army2, 'rain');
+$rainResult = new \Result($army1, $army2, 'rain');
+list($rainDuration, $rainResult1, $rainResult2) = $rainResult->getOverallResult();
 ?>
 
     <table border="1">

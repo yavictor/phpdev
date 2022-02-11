@@ -1,6 +1,6 @@
 <?php
 
-class Army
+class Army implements ArmyInterface
 {
     private array $units = [];
 
@@ -31,7 +31,7 @@ class Army
         return substr($result,0,-2) . '.';
     }
 
-    function getArmyDamageHealth($weather): array
+    public function getArmyDamageHealth($weather): array
     {
         $damage = 0;
         $health = 0;
@@ -50,7 +50,7 @@ class Army
         return [$damage, $health];
     }
 
-    function getEachRowDamageHealth(): array
+    public function getEachRowDamageHealth(): array
     {
         $result = [];
         foreach ($this->units as [$units, $count]) {
